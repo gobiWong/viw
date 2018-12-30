@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <script src="../vue01/lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="cpp">
+        <div class="container">
+            <blockquote>
+                <p class="text-center text-success">我的车库</p>
+            </blockquote>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header padding-base-vertical">
+                        <h3 class="primary">添加品牌</h3>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label>Id</label>
+                                <input type="text" class="form-control" v-model="id" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" v-model="name" @keyup.enter="add" placeholder="">
+                            </div>
+                            <button type="button" class="btn btn-default" @click="add()">添加</button>
+                            <div class="form-group">
+                                <label>搜索名称和关键字:</label>
+                                <input type="text" class="form-control" v-model="keyWords" placeholder="保时劫" v-define
+                                    v-color="'blue'">
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+                <p class="bg-info"><span class="caret "></span></p>
+            </nav>
+
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Ctime</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in search()" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td v-text="item.name"></td>
+                        <td>{{item.ctime | dateFormat}}</td>
+                        <td>
+                            <a href="" @click.prevent="del(item.id)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+
+
+    </div>
+    <div class="app" v-color="'green'" v-Dname="700" v-Fsz="'50'">
+        <!-- <input type="button" value="roll" @click="roll"> -->
+        <!-- <input type="button" value="stop" @click="stop"> -->
+        <p>
+            {{ sdt | selfTime }}
+        </p>
+
+        <button>哈哈！</button>
+    </div>
+    <script>
+        //自定义表单input的按键修饰符(可以覆盖Vue提供的按键修饰符，此时按F2键才有效)
+        Vue.config.keyCodes.enter = 113
+        //自定义指令Vue.directive()全局指令让文本框获取焦点
+        //参数1：指令名称，定义的时候，不需要加v-前缀，调用的时候必须加v-来调用
+        //参数2：是一个对象，为一些指令的相关函数，这些函数在特定阶段，执行相关操作
+
+        Vue.directive('define', {
+            bind: function (el) {
+                //指令绑定到元素上的时候，执行bind函数，执行一次，这时元素还没有插入到DOM中，无法操作dom元素，无法调用dom元素focus方法 
+                //el.focus()
+            },
+            inserted(el) {
+                //表示元素已插入dom中的时候调用，执行inserted函数【触发1次】
+                //一般绑定和js行为相关的处理函数
+                el.focus()
+            },
+            updated: function (el) {
+                //当Vnode节点更新时，执行updated 可触发多次
+            }
+        })
+        Vue.directive('color', {
+            bind: function (el, binding) {
+                //一般绑定和css样式相关的函数，主要练习第二个参数的意义
+                //binding.name
+                //binding.express
+                //binding.value
+                el.style.color = binding.value
+
+            }
+
+        })
+        Vue.filter('dateFormat', function (ctime, pattern = "") {
+            var dt = new Date(ctime)
+            var y = dt.getFullYear()
+            var m = dt.getMonth() + 1
+            var d = dt.getDate()
+            if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                return `${y}-${m}-${d}`
+            } else {
+                var hh = dt.getHours()
+                var mm = dt.getMinutes()
+                var ss = dt.getSeconds()
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+
+        })
+        //私有过滤器,私有指令
+        var vmp = new Vue({
+            el: '.app',
+            data: {
+                sdt: new Date(),
+                //timerId: null
+            },
+            // updated(){
+            //     {
+            //         roll:function() {
+            //         //if (this.timerId != null) return
+            //         // this.timerId = setInterval(() => {
+            //             var start = this.sdt.toString().substr(0, 1)
+            //             var end = this.sdt.toString().substr(1)
+            //             this.sdt = end + start
+            //         // }, 250)
+            //     },
+            //     stop:function () {
+            //         // clearInterval(this.timerId)
+            //         // this.timerId = null
+            //     }
+
+            //     }
+               
+            // },
+            //  methods: {
+
+            //     roll() {
+            //         //if (this.timerId != null) return
+            //         // this.timerId = setInterval(() => {
+            //             var start = this.sdt.toString().substr(0, 1)
+            //             var end = this.sdt.toString().substr(1)
+            //             this.sdt = end + start
+            //         // }, 250)
+            //     },
+            //     stop() {
+            //         // clearInterval(this.timerId)
+            //         // this.timerId = null
+            //     }
+            // },
+            filters: {
+                //过滤器名称：处理函数
+                selfTime: function (sdt, pattern = "") {
+                    var dt = new Date(sdt)
+                    var y = dt.getFullYear()
+                    var m = (dt.getMonth() + 1).toString().padStart(2, 0)
+                    var d = dt.getDate().toString().padStart(2, 0)
+                    if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                        return `${y}-${m}-${d}`
+                    } else {
+                        var hh = dt.getHours().toString().padStart(2, 0)
+                        var mm = dt.getMinutes().toString().padStart(2, 0)
+                        var ss = dt.getSeconds().toString().padStart(2, 0)
+                        return `${y}-${m}-${d} ${hh}:${mm}:${ss}~~私有过滤器!嘿嘿！`
+                    }
+                }
+            },
+            directives: {
+                Dname: {
+                    bind: function (el, binding) {
+                        el.style.fontWeight = binding.value
+                    }
+                },
+                //简写形式
+                Fsz: function (el, binding) {
+                    el.style.fontSize = parseInt(binding.value) + 'px'
+                }
+
+            }
+
+        })
+        var vm = new Vue({
+            el: '#cpp',
+            data: {
+                id: '',
+                name: '',
+                keyWords: '',
+                list: [
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '本茨', ctime: new Date() },
+                    { id: 3, name: '五菱', ctime: new Date() },
+                ]
+            },
+            methods: {
+                add() {
+                    var car = { id: this.id, name: this.name, ctime: new Date() }
+                    if (!this.id == '' && !this.name == '') {
+                        this.list.push(car)
+                        this.id = this.name = ''
+                    }
+                },
+                del(id) {
+                    //findIndex return true表示找到了元素, 会立即终止循环
+                    // 同时findIndex的返回值就是找到的元素的 索引
+                    let i = this.list.findIndex(item => {
+                        // console.log('我在循环' + index)
+                        // 某内某鸟的代码
+                        // if (item.id == id) {
+                        //   return true
+                        // }
+                        // 黑马人的代码! 高级
+                        return item.id == id
+                    })
+                    this.list.splice(i, 1)
+
+                },
+                search() {
+                    return this.list.filter(item => item.name.includes(this.keyWords.trim()))
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

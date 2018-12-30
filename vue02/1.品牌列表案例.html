@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" href="./lib/bootstrap.css">
+	<script src="../vue01/lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+	<div id="cpp">
+		<div class="container">
+			<blockquote>
+				<p class="text-center text-success">我的车库</p>
+			</blockquote>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header padding-base-vertical">
+						<h3 class="primary">添加品牌</h3>
+						<form class="form-inline">
+							<div class="form-group">
+								<label>Id</label>
+								<input type="text" class="form-control" v-model="id" placeholder="">
+							</div>
+							<div class="form-group">
+								<label>Name</label>
+								<input type="text" class="form-control" v-model="name" placeholder="">
+							</div>
+							<button type="button" class="btn btn-default" @click="add()">添加</button>
+							<div class="form-group">
+								<label>搜索名称和关键字:</label>
+								<input type="text" class="form-control" v-model="keyWords" placeholder="保时捷">
+							</div>
+						</form>
+
+
+					</div>
+
+				</div>
+				<p class="bg-info"><span class="caret "></span></p>
+			</nav>
+
+
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Ctime</th>
+						<th>Operation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="item in search()" :key="item.id">
+						<td>{{ item.id }}</td>
+						<td v-text="item.name"></td>
+						<td>{{item.ctime}}</td>
+						<td>
+							<a href="" @click.prevent="del(item.id)">删除</a>
+						</td>
+					</tr>
+				</tbody>
+
+
+			</table>
+		</div>
+
+
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#cpp',
+			data: {
+				id: '',
+				name: '',
+				keyWords: '',
+				list: [
+					{ id: 1, name: '奔驰', ctime: new Date() },
+					{ id: 2, name: '本茨', ctime: new Date() },
+					{ id: 3, name: '五菱', ctime: new Date() },
+				]
+			},
+			methods: {
+				add() {
+					var car = { id: this.id, name: this.name, ctime: new Date() }
+					this.list.push(car)
+					this.id = this.name = ''
+
+
+				},
+				del(id) {
+					//findIndex return true表示找到了元素, 会立即终止循环
+					// 同时findIndex的返回值就是找到的元素的 索引
+					let i = this.list.findIndex(item => {
+						// console.log('我在循环' + index)
+						// 某内某鸟的代码
+						// if (item.id == id) {
+						//   return true
+						// }
+						// 黑马人的代码! 高级
+						return item.id == id
+					})
+					this.list.splice(i, 1)
+
+				},
+				search() {
+					return this.list.filter(item => item.name.includes(this.keyWords.trim()))
+				}
+			}
+		})
+	</script>
+
+</body>
+
+</html>
