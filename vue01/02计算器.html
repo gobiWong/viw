@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="n1">
+		<select v-model="opt">
+			<option value="加">加</option>
+			<option value="减">减</option>
+			<option value="乘">乘</option>
+			<option value="除">除</option>
+
+		</select>
+		<input type="text" v-model="n2">
+		<input type="button" value="等于" @click="calc">
+		<input type="text" v-model="result">
+		
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el:'#app',
+			data:{
+				n1:0,
+				n2:0,
+				result:0,
+				opt:"加"
+			},
+			methods:{
+				calc(){
+
+						switch(this.opt){
+					case '加':
+              this.result = parseFloat(this.n1) + parseFloat(this.n2)
+              break;
+            case '减':
+              this.result = parseFloat(this.n1) - parseFloat(this.n2)
+              break;
+            case '乘':
+              this.result = parseFloat(this.n1) * parseFloat(this.n2)
+              break;
+            case '除':
+              this.result = parseFloat(this.n1) / parseFloat(this.n2)
+              break;
+
+				}
+				}
+			
+
+			}
+		})
+
+	</script>
+</body>
+</html>

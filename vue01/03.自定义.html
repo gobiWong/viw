@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .clock{
+            width: 300px;
+            height: 300px;
+            border: 10px solid #ccc;
+            background-color: green;
+            /*border-radius: 160px;*/
+            /*百分比参照元素的实际宽高*/
+            border-radius: 50%;
+            margin:100px auto;
+            position: relative;
+        }
+        .clock> div:before{
+            background-color: #fff;
+        }
+        .line{
+            width: 2px;
+            height: 300px;
+            background-color: black;
+            position: absolute;
+            /*参照父容器的宽*/
+            left: 50%;
+            top:0;
+            /*参照元素本身*/
+            transform: translate(-50%,0);
+        }
+        /*.line1,.line4{
+            width: 10px;
+        }*/
+        .line2{
+            transform: translate(-50%,0) rotate(22.5deg);
+        }
+        .line3{
+            transform: translate(-50%,0) rotate(45deg);
+        }
+        .line4{
+            transform: translate(-50%,0) rotate(67.5deg);
+        }
+        .line5{
+            transform: translate(-50%,0) rotate(90deg);
+        }
+        .line6{
+            transform: translate(-50%,0) rotate(112.5deg);
+        }
+        .line7{
+            transform: translate(-50%,0) rotate(135deg);
+        }
+        .line8{
+            transform: translate(-50%,0) rotate(157.5deg);
+        }
+        .line1:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 36.25px;
+            right: -4px;
+            animation:line 2s infinite .25s linear;
+        }
+       
+        .line2:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 0px;
+            right: -4px;
+            animation:line 2s infinite  1.75s linear;
+        }
+        
+        .line3:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 36.25px;
+            right: -4px;
+            animation:line 2s infinite .75s linear;
+        }
+       
+        .line4:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 32.5px;
+            right: -4px;
+            animation:line 2s infinite 1.5s linear;
+        }
+        
+        .line5:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 0px;
+            right: -4px;
+            animation:line 2s infinite linear;
+        }
+       
+        .line6:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 72.5px;
+            right: -4px;
+            animation:line 2s infinite  1s linear;
+        }
+        
+        .line7:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 72.5px;
+            right: -4px;
+            animation:line 2s infinite .5s linear;
+        }
+        
+        .line8:before{
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            top: 80px;
+            right: -4px;
+            animation:line 2s infinite  1.25s linear;
+        }
+        @keyframes line{
+            0%   { top:0px;}
+            25%  {  top:145px;}
+            50%  { top:290px;}
+            75%  {  top:145px;}
+            100% {  top:0px;}
+        }
+
+
+        /*.cover{
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .hour{
+            width: 6px;
+            height: 80px;
+            background-color: red;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-100%);
+            transform-origin: center bottom;
+            animation: clockAnimation 43200s linear infinite;
+        }*/
+        /*.minute{
+            width: 4px;
+            height: 90px;
+            background-color: green;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-100%);
+            transform-origin: center bottom;
+            animation: clockAnimation 3600s linear infinite;
+        }*/
+       /*  .second{
+           width: 2px;
+           height: 100px;
+           background-color: blue;
+           position: absolute;
+           left: 50%;
+           top: 50%;
+           transform: translate(-50%,-100%);
+       
+           设置旋转轴心
+           transform-origin: center bottom;
+           添加动画
+           animation: clockAnimation 60s infinite steps(60);
+           steps(60)与animation-timing-function的其它属性冲突
+           animation-timing-function: steps(60);
+       } */
+        /*.center{
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+*/
+        /*创建动画*/
+       /* @keyframes clockAnimation {
+            from{
+                transform:translate(-50%,-100%) rotate(0deg);
+            }
+            to{
+                transform:translate(-50%,-100%) rotate(360deg);
+            }
+        }*/
+       
+    </style>
+</head>
+<body>
+<div class="clock">
+    <div class="line line1"></div>
+    <div class="line line2"></div>
+    <div class="line line3"></div>
+    <div class="line line4"></div>
+    <div class="line line5"></div>
+    <div class="line line6"></div>
+    <div class="line line7"></div>
+    <div class="line line8"></div>
+
+   <!--  <div class="cover"></div>
+    <div class="hour"></div>
+    <div class="minute"></div>
+    <div class="second"></div>
+    <div class="center"></div> -->
+</div>
+</body>
+</html>
