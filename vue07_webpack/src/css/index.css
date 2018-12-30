@@ -1,0 +1,8 @@
+li{
+  list-style: none
+}
+.img{
+  width: 760px;
+  height: 430px;
+  background-image: url(../images/bg_news.jpg);
+}
